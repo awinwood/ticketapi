@@ -23,8 +23,8 @@ class TicketFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'subject' => $this->faker->sentence(),
-            'content' => $this->faker->paragraph(),
+            'subject' => fake()->realText(60),
+            'content' => fake()->realText(200),
             'status' => TicketStatus::OPEN,
         ];
     }

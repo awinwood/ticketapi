@@ -57,6 +57,7 @@ php artisan migrate
 
 ```bash
 composer install
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 ```
 
 5. Migrate (creates the required tables in SQLite)

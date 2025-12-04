@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Default API limiter
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by(
+                optional($request->user())->id ?: $request->ip()
+            );
+        });
+
+        // Custom limiter specifically for the ticket API
+        RateLimiter::for('tickets-api', function (Request $request) {
+            return Limit::perMinute(30)->by(
+                optional($request->user())->id ?: $request->ip()
+            );
+        });
     }
 }

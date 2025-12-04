@@ -12,67 +12,70 @@ use Illuminate\Support\Facades\DB;
  * Service responsible for processing (closing) open tickets.
  *
  * The implementation is designed to be safe under concurrent execution by:
- * - Selecting the oldest open tickets.
- * - Chunking the results into batches of a configurable size to limit the number stored in memory.
+ * - Selecting the oldest open tickets up to a configurable limit.
  * - Locking the selected rows FOR UPDATE inside a transaction.
  *
- * This ensures that two concurrent runs do not process the same tickets twice.
+ * Tickets are still updated one-by-one in a loop (no bulk update query),
+ * but they are processed in a single transactional batch for consistency.
  */
 class TicketProcessorService
 {
     /**
-     * Process (close) a batch of open tickets.
+     * Process (close) up to a given number of open tickets.
      *
      * Tickets are processed in FIFO order (oldest first) to simulate a real
      * support queue. The method returns a value object describing the outcome
      * of the run, which is convenient for logging and testing.
      *
-     * @param  int  $chunkSize  Number of tickets to read into memory at o time.
+     * @param  int  $count  Maximum number of tickets to process in this run.
      * @return \App\Data\TicketProcessingResult
      */
-    public function process(int $chunkSize = 100): TicketProcessingResult
+    public function process(int $count = 1): TicketProcessingResult
     {
-        if ($chunkSize <= 0) {
+        if ($count <= 0) {
             return TicketProcessingResult::empty();
         }
 
-        $processedIds = [];
+        return DB::transaction(function () use ($count): TicketProcessingResult {
+            // Lock the selected tickets to avoid double-processing in concurrent runs.
+            $tickets = Ticket::query()
+                ->where('status', TicketStatus::OPEN)
+                ->orderBy('created_at')
+                ->limit($count)
+                ->lockForUpdate()
+                ->get();
 
-        Ticket::query()
-            ->where('status', TicketStatus::OPEN)
-            ->orderBy('created_at')
-            ->chunkById($chunkSize, function ($tickets) use (&$processedIds) {
-                foreach ($tickets as $ticket) {
-                    DB::transaction(function () use ($ticket, &$processedIds) {
-                        // Re-fetch & lock the row to be safe under concurrency.
-                        $locked = Ticket::query()
-                            ->whereKey($ticket->id)
-                            ->lockForUpdate()
-                            ->first();
+            if ($tickets->isEmpty()) {
+                return TicketProcessingResult::empty();
+            }
 
-                        if (! $locked) {
-                            return;
-                        }
+            $processedIds = [];
 
-                        // Skip if another process already closed it.
-                        if ($locked->status !== TicketStatus::OPEN) {
-                            return;
-                        }
-
-                        $locked->update(['status' => TicketStatus::CLOSED]);
-
-                        $processedIds[] = $locked->id;
-                    });
+            // Process the tickets one at a time (no bulk update).
+            foreach ($tickets as $ticket) {
+                // In case status somehow changed between select and loop.
+                if ($ticket->status !== TicketStatus::OPEN) {
+                    continue;
                 }
-            });
 
-        if (empty($processedIds)) {
-            return TicketProcessingResult::empty();
-        }
+                $updated = $ticket->update([
+                    'status'     => TicketStatus::CLOSED,
+                    'updated_at' => now(),
+                ]);
 
-        return new TicketProcessingResult(
-            processedCount: count($processedIds),
-            ticketIds: $processedIds,
-        );
+                if ($updated) {
+                    $processedIds[] = $ticket->id;
+                }
+            }
+
+            if (empty($processedIds)) {
+                return TicketProcessingResult::empty();
+            }
+
+            return new TicketProcessingResult(
+                processedCount: count($processedIds),
+                ticketIds: $processedIds,
+            );
+        });
     }
 }

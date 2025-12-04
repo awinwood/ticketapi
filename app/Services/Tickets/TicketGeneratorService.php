@@ -23,7 +23,7 @@ class TicketGeneratorService
      * @param  int  $count  Number of tickets to create.
      * @return \Illuminate\Support\Collection<\App\Models\Ticket>  The created tickets.
      */
-    public function generate(int $count = 10): Collection
+    public function generate(int $count = 1): Collection
     {
         // Use existing users if available, otherwise create a small pool of fake users.
         $users = User::all()->count() ? User::all() : User::factory()->count($count)->create();

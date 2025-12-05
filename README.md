@@ -1,3 +1,5 @@
+![Tests](https://github.com/awinwood/ticketapi/actions/workflows/laravel.yml/badge.svg)
+
 # 🚀 Support Ticket API Technical Test
 A production ready Laravel API that simulates a high-volume support ticket system.
 

@@ -1,15 +1,40 @@
-# 🚀 Support Ticket API Test
+# 🚀 Support Ticket API Technical Test
 A production ready Laravel API that simulates a high-volume support ticket system.
 
 The project includes the following features:
-- Laravel 12 backend using SQLite (are required by the test)
-- Secured API using Laravel Sanctum
+- Laravel 12 backend using SQLite (as required by the test)
+- Secured API using Laravel Sanctum token auth
 - Scheduled commands for generating & processing support tickets
-- Audit logging middleware
+- Commands generate single tickets by default but can be scaled to generate multiple tickets at once with --count
+- Rate-limited API (30 req/min per user/IP)
+- Audit logging middleware (user, token, method, path, payloads, durations)
 - Fully paginated API endpoints returning JSON Resources
-- Minimal example frontend to demonstrate consuming the API
 - Postman collection for all endpoints
-- Full test suite with at least 80% coverage
+- Full unit & feature test suite with ~96% coverage
+
+## ⚡ Quick Start
+```bash
+git clone https://github.com/awinwood/ticketapi ticketapi
+cd ticketapi
+
+cp .env.example .env
+touch database/database.sqlite
+composer install
+
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
+Generate a token:
+```bash
+php artisan tinker
+$user = \App\Models\User::first() ?? \App\Models\User::factory()->create();
+$user->createToken('token', ['read:tickets'])->plainTextToken;
+```
+Use it with:
+```bash
+Authorization: Bearer <token>
+```
 
 ## 📦 Tech Stack
 Backend:
@@ -18,11 +43,11 @@ Backend:
 - SQLite
 - Sanctum (API token auth)
 
-Dev Environment:
+Dev Environment used:
 - DDev + Docker
 - WSL2 (Ubuntu)
 
-## 🛠️ Installation and Setup
+## 🛠️ Installation and Setup (without DDev)
 
 1. Clone the repo
 
@@ -80,8 +105,6 @@ php artisan tinker
 
 $user = \App\Models\User::first() ?? \App\Models\User::factory()->create();
 $token = $user->createToken('test-token', ['read:tickets'])->plainTextToken;
-
-echo $token;
 ```
 Use it in Postman
 ```http
@@ -89,27 +112,38 @@ Authorization: Bearer <token>
 ```
 
 ## 📅 Scheduled Commands
-The system includes two scheduled commands:
+The system includes two scheduled commands to simulate a support ticket system:
 
-Generate dummy tickets every minute
+Generate a single dummy ticket, or multiple with --count 
 ```bash
 php artisan tickets:generate
+php artisan tickets:generate --count=50
 ```
 
-Process (close) open tickets every 5 minutes
+Process (close) an open ticket, or multiple with --count
 ```bash
 php artisan tickets:process
+php artisan tickets:process --count=50
+```
+
+Run the scheduler to generate a new ticket every minute and process an open ticket every 5 minutes
+```bash
+php artisan schedule:run
 ```
 
 ## 📡 API Endpoints
 All responses are structured JSON using Laravel API Resources.
 
 ### GET /api/tickets/open
-- Returns paginated list of open tickets
+- Returns paginated list of open tickets using query params:
+    - page=1 (default)
+    - per_page=50 (default)
 - Sorted by oldest first
 
 ### GET /api/tickets/closed
-- Returns paginated list of closed tickets
+- Returns paginated list of closed tickets using query params:
+    - page=1 (default)
+    - per_page=50 (default)
 - Sorted by most recently closed
 
 ### GET /api/users/{userId}/tickets
@@ -130,43 +164,49 @@ Returns:
 }
 ```
 
-## 🕵️ Audit Logging
-Every API request goes through a custom middleware that logs:
-- Authenticated user
-- IP address
-- Method
-- URI
-- Query/body payloads
+## 🧵 Rate Limiting
+All API endpoints are rate limited to 30 requests per minute per user/IP.
 
-Logged in the api_audits table.
+Laravel responds with a 429 Too Many Requests status code if the limit is exceeded.
+
+## 🕵️ Audit Logging
+Every API request goes through a custom middleware that logs to the `api_audits` table:
+- Authenticated user and access token
+- HTTP method
+- Route name
+- URI
+- Status code
+- IP address
+- User agent
+- Duration
+- Query/body payloads
 
 
 ## 🧪 Tests
-Test suite includes:
-- Model tests
+Test suite uses Pest + PHPUnit and includes:
+- Model tests & resource tests
 - Enum tests
 - API endpoint tests
-- Pagination tests
 - Command tests (generator + processor)
 - Middleware/audit logging tests
-- At least 80% coverage (as required)
+- current coverage: 95.7% (exceeds 80% required coverage)
 
-Run tests with coverage:
+Run tests with coverage (requires Xdebug):
 ```bash
 php artisan test --coverage
 ```
 
 ## 📁 Postman Collection
-A complete Postman collection is included at `postman/SupportTickets.postman_collection.json`
+A complete Postman collection is included at `postman/TicketApi.postman_collection.json`
 
 It includes:
 - All endpoints
 - Example requests & example responses
-- Environment variable for baseUrl
+- Environment variable for URL {{baseUrl}} 
 - Pre-set Authorization: Bearer {{apiToken}} header
 
 ## 📝 Notes
 
 - Designed to scale to 1M+ ticket rows via pagination, indexing, and lightweight queries
 - SQLite is used only because the technical test requires it
-- In production this would use MySQL/Postgres + Horizon + queues
+- In production this would use MySQL + Horizon + queues

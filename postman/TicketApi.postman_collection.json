@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "e8559818-0ce1-4844-ac27-741861a58db5",
+		"name": "TicketApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "434373"
+	},
+	"item": [
+		{
+			"name": "Open Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/api/tickets/open?page=1",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tickets",
+						"open"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						}
+					]
+				},
+				"description": "# Get Open Tickets\n\nThis endpoint retrieves all tickets with an \"Open\" status from the ticketing system. The response includes pagination support to handle large datasets efficiently.\n\n## Query Parameters\n\n| Parameter | Type | Required | Default | Description |\n| --- | --- | --- | --- | --- |\n| `page` | integer | No | 1 | The page number to retrieve. Used for navigating through paginated results. |\n| `per_page` | integer | No | 50 | The number of tickets to return per page. Controls the size of the result set. |\n\n## Response Structure\n\nThe endpoint returns a JSON object with the following structure:\n\n### `data` (array)\n\nAn array of ticket objects. Each ticket contains:\n\n- `id` (integer): Unique identifier for the ticket\n    \n- `subject` (string): The ticket's subject line\n    \n- `content` (string): The full content/description of the ticket\n    \n- `status` (string): Current status of the ticket (will be \"Open\" for this endpoint)\n    \n- `status_id` (integer): Numeric identifier for the status (1 = Open)\n    \n- `created_at` (string): ISO 8601 timestamp when the ticket was created\n    \n- `updated_at` (string): ISO 8601 timestamp when the ticket was last updated\n    \n- `user` (object): Information about the user who created the ticket\n    - `id` (integer): User's unique identifier\n        \n    - `name` (string): User's full name\n        \n    - `email` (string): User's email address\n        \n\n### `links` (object)\n\nPagination navigation links:\n\n- `first`: URL to the first page\n    \n- `last`: URL to the last page\n    \n- `prev`: URL to the previous page (null if on first page)\n    \n- `next`: URL to the next page (null if on last page)\n    \n\n### `meta` (object)\n\nPagination metadata:\n\n- `current_page` (integer): The current page number\n    \n- `from` (integer): The starting record number on this page\n    \n- `to` (integer): The ending record number on this page\n    \n- `total` (integer): Total number of open tickets across all pages\n    \n- `per_page` (integer): Number of records per page\n    \n- `last_page` (integer): The last available page number\n    \n- `path` (string): Base URL path for the endpoint\n    \n- `links` (array): Detailed pagination links with labels and active states\n    \n\n## Example Use Cases\n\n1. **Retrieve first page of open tickets**: Use default parameters or explicitly set `page=1`\n    \n2. **Navigate through pages**: Use the `next` link from the response or increment the `page` parameter\n    \n3. **Adjust page size**: Modify `per_page` to retrieve more or fewer tickets per request (useful for performance optimization)\n    \n4. **Check total open tickets**: Use the `meta.total` field to determine the total count of open tickets\n    \n\n## Response Status Codes\n\n- `200 OK`: Successfully retrieved open tickets\n    \n- `401 Unauthorised`: Invalid apiToken\n    \n- `429 Too Many Requests`: Hit the Rate Limiting, wait 60 secs and try again."
+			},
+			"response": [
+				{
+					"name": "Open Tickets",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{baseUrl}}/api/tickets/open?page=1&per_page=50",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"open"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.6"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 05 Dec 2025 10:31:16 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "30"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "29"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"id\": 11,\n            \"subject\": \"So they sat down with wonder at the window.' 'THAT you.\",\n            \"content\": \"Queen. 'Never!' said the Cat. 'Do you mean \\\"purpose\\\"?' said Alice. 'Nothing WHATEVER?' persisted the King. The next witness was the first position in which the March Hare interrupted in a minute.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"user\": {\n                \"id\": 11,\n                \"name\": \"Micah Monahan\",\n                \"email\": \"ucronin@example.net\"\n            }\n        },\n        {\n            \"id\": 12,\n            \"subject\": \"AT ALL. Soup does very well without--Maybe it's always.\",\n            \"content\": \"Bill, the Lizard) could not swim. He sent them word I had not got into a small passage, not much larger than a real Turtle.' These words were followed by a very good advice, (though she very.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"user\": {\n                \"id\": 7,\n                \"name\": \"Ms. Mazie Stehr\",\n                \"email\": \"evie67@example.net\"\n            }\n        },\n        {\n            \"id\": 13,\n            \"subject\": \"I am, sir,' said Alice; 'I might as well as she could not.\",\n            \"content\": \"There could be NO mistake about it: it was empty: she did not quite sure whether it would feel with all speed back to the end: then stop.' These were the cook, and a pair of boots every Christmas.'.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"user\": {\n                \"id\": 11,\n                \"name\": \"Micah Monahan\",\n                \"email\": \"ucronin@example.net\"\n            }\n        },\n        {\n            \"id\": 14,\n            \"subject\": \"Alice! when she noticed that the Mouse to tell you--all I.\",\n            \"content\": \"I've had such a new idea to Alice, very loudly and decidedly, and there was a general clapping of hands at this: it was her dream:-- First, she dreamed of little Alice was very hot, she kept on good.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"user\": {\n                \"id\": 15,\n                \"name\": \"Lilla Schmeler\",\n                \"email\": \"akoss@example.net\"\n            }\n        },\n        {\n            \"id\": 15,\n            \"subject\": \"The Mouse gave a little three-legged table, all made of.\",\n            \"content\": \"So she began: 'O Mouse, do you know I'm mad?' said Alice. 'Well, then,' the Gryphon as if she were looking up into a line along the passage into the teapot. 'At any rate a book of rules for shutting.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"user\": {\n                \"id\": 12,\n                \"name\": \"Frederik Brown\",\n                \"email\": \"kelly00@example.com\"\n            }\n        },\n        {\n            \"id\": 16,\n            \"subject\": \"Mock Turtle. 'Seals, turtles, salmon, and so on.' 'What a.\",\n            \"content\": \"I should think you could keep it to be patted on the song, 'I'd have said to Alice, they all moved off, and Alice rather unwillingly took the thimble, looking as solemn as she was looking for eggs.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 3,\n                \"name\": \"Nickolas Jenkins\",\n                \"email\": \"christelle.block@example.net\"\n            }\n        },\n        {\n            \"id\": 17,\n            \"subject\": \"King, the Queen, who was passing at the Queen, and Alice.\",\n            \"content\": \"The first question of course you don't!' the Hatter hurriedly left the court, by the officers of the tail, and ending with the edge with each hand. 'And now which is which?' she said this, she came.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 9,\n                \"name\": \"Carleton Leuschke\",\n                \"email\": \"sandrine.schaden@example.org\"\n            }\n        },\n        {\n            \"id\": 18,\n            \"subject\": \"Yet you balanced an eel on the hearth and grinning from.\",\n            \"content\": \"Alice, and she hurried out of THIS!' (Sounds of more broken glass.) 'Now tell me, Pat, what's that in about half no time! Take your choice!' The Duchess took no notice of them attempted to explain.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 15,\n                \"name\": \"Lilla Schmeler\",\n                \"email\": \"akoss@example.net\"\n            }\n        },\n        {\n            \"id\": 19,\n            \"subject\": \"WAS a narrow escape!' said Alice, rather doubtfully, as.\",\n            \"content\": \"Alice was soon submitted to by all three dates on their slates, 'SHE doesn't believe there's an atom of meaning in it,' said the Mouse, who was beginning to grow larger again, and she hurried out of.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 8,\n                \"name\": \"Gino Osinski\",\n                \"email\": \"harrison11@example.org\"\n            }\n        },\n        {\n            \"id\": 20,\n            \"subject\": \"Queen of Hearts, he stole those tarts, And took them quite.\",\n            \"content\": \"And it'll fetch things when you have just been reading about; and when she first saw the Mock Turtle replied; 'and then the puppy jumped into the loveliest garden you ever eat a little anxiously.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 15,\n                \"name\": \"Lilla Schmeler\",\n                \"email\": \"akoss@example.net\"\n            }\n        },\n        {\n            \"id\": 21,\n            \"subject\": \"Alice could hear the name of the other side, the puppy.\",\n            \"content\": \"Alice the moment he was in confusion, getting the Dormouse turned out, and, by the pope, was soon submitted to by all three dates on their slates, when the White Rabbit, 'but it doesn't mind.' The.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 5,\n                \"name\": \"Ms. Gabrielle Adams DDS\",\n                \"email\": \"leffler.walton@example.com\"\n            }\n        },\n        {\n            \"id\": 22,\n            \"subject\": \"Come on!' 'Everybody says \\\"come on!\\\" here,' thought Alice.\",\n            \"content\": \"March, I think you'd take a fancy to cats if you hold it too long; and that you couldn't cut off a head could be no use in crying like that!' 'I couldn't afford to learn it.' said the March Hare.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 8,\n                \"name\": \"Gino Osinski\",\n                \"email\": \"harrison11@example.org\"\n            }\n        },\n        {\n            \"id\": 23,\n            \"subject\": \"I learn music.' 'Ah! that accounts for it,' said the.\",\n            \"content\": \"So she began nibbling at the top of his Normans--\\\" How are you thinking of?' 'I beg your pardon,' said Alice aloud, addressing nobody in particular. 'She'd soon fetch it back!' 'And who is Dinah, if.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 24,\n            \"subject\": \"Alice thought she might as well say this), 'to go on till.\",\n            \"content\": \"VERY wide, but she got back to my boy, I beat him when he sneezes; For he can EVEN finish, if he doesn't begin.' But she waited for a conversation. Alice replied, rather shyly, 'I--I hardly know.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 7,\n                \"name\": \"Ms. Mazie Stehr\",\n                \"email\": \"evie67@example.net\"\n            }\n        },\n        {\n            \"id\": 25,\n            \"subject\": \"Queen, but she remembered trying to make ONE respectable.\",\n            \"content\": \"I sleep\\\" is the same as the March Hare interrupted, yawning. 'I'm getting tired of sitting by her sister on the other side of the jurors had a little faster?\\\" said a whiting to a day-school, too,'.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 10,\n                \"name\": \"Miss Harmony Pfannerstill\",\n                \"email\": \"tony.stracke@example.org\"\n            }\n        },\n        {\n            \"id\": 26,\n            \"subject\": \"English); 'now I'm opening out like the three were all.\",\n            \"content\": \"Alice's great surprise, the Duchess's cook. She carried the pepper-box in her life; it was growing, and she went on, without attending to her, still it had a VERY good opportunity for making her.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 4,\n                \"name\": \"Brendan Rice\",\n                \"email\": \"wbartoletti@example.com\"\n            }\n        },\n        {\n            \"id\": 27,\n            \"subject\": \"Oh dear! I shall think nothing of the wood--(she.\",\n            \"content\": \"Duchess: 'flamingoes and mustard both bite. And the moral of that dark hall, and close to the other: the only difficulty was, that if you please! \\\"William the Conqueror, whose cause was favoured by.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 5,\n                \"name\": \"Ms. Gabrielle Adams DDS\",\n                \"email\": \"leffler.walton@example.com\"\n            }\n        },\n        {\n            \"id\": 28,\n            \"subject\": \"Shall I try the experiment?' 'HE might bite,' Alice.\",\n            \"content\": \"Bill,' she gave her answer. 'They're done with a lobster as a drawing of a feather flock together.\\\"' 'Only mustard isn't a letter, after all: it's a very long silence, broken only by an occasional.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Prof. Adan Douglas DDS\",\n                \"email\": \"kitty.kris@example.com\"\n            }\n        },\n        {\n            \"id\": 29,\n            \"subject\": \"Alice, swallowing down her flamingo, and began to say but.\",\n            \"content\": \"CAN all that stuff,' the Mock Turtle angrily: 'really you are painting those roses?' Five and Seven said nothing, but looked at them with large eyes full of soup. 'There's certainly too much of a.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 30,\n            \"subject\": \"Presently she began very cautiously: 'But I don't put my.\",\n            \"content\": \"She soon got it out loud. 'Thinking again?' the Duchess began in a great letter, nearly as large as himself, and this was the matter worse. You MUST have meant some mischief, or else you'd have.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 13,\n                \"name\": \"Prof. Leopold Ernser\",\n                \"email\": \"marta.becker@example.org\"\n            }\n        },\n        {\n            \"id\": 31,\n            \"subject\": \"Next came an angry tone, 'Why, Mary Ann, what ARE you.\",\n            \"content\": \"The Gryphon lifted up both its paws in surprise. 'What! Never heard of uglifying!' it exclaimed. 'You know what to do anything but sit with its arms and legs in all directions, tumbling up against.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 12,\n                \"name\": \"Frederik Brown\",\n                \"email\": \"kelly00@example.com\"\n            }\n        },\n        {\n            \"id\": 32,\n            \"subject\": \"AT ALL. Soup does very well to introduce it.' 'I don't see.\",\n            \"content\": \"CHAPTER IV. The Rabbit Sends in a low voice. 'Not at first, perhaps,' said the Gryphon: and Alice looked all round her once more, while the rest of the sort. Next came an angry tone, 'Why, Mary Ann.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 14,\n                \"name\": \"Miss Kiara Kutch II\",\n                \"email\": \"hudson.marquise@example.com\"\n            }\n        },\n        {\n            \"id\": 33,\n            \"subject\": \"I shall be punished for it flashed across her mind that.\",\n            \"content\": \"Alice, and she hastily dried her eyes immediately met those of a well?' 'Take some more of the jurymen. 'It isn't mine,' said the Hatter, 'when the Queen furiously, throwing an inkstand at the.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Prof. Adan Douglas DDS\",\n                \"email\": \"kitty.kris@example.com\"\n            }\n        },\n        {\n            \"id\": 34,\n            \"subject\": \"VERY remarkable in that; nor did Alice think it would make.\",\n            \"content\": \"Longitude I've got to come yet, please your Majesty,' said the Dormouse, without considering at all the things being alive; for instance, there's the arch I've got to the door. 'Call the next.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 14,\n                \"name\": \"Miss Kiara Kutch II\",\n                \"email\": \"hudson.marquise@example.com\"\n            }\n        },\n        {\n            \"id\": 35,\n            \"subject\": \"The poor little thing grunted in reply (it had left off.\",\n            \"content\": \"A secret, kept from all the jurymen are back in a tone of great surprise. 'Of course it is,' said the Knave, 'I didn't write it, and fortunately was just in time to wash the things get used up.'.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 13,\n                \"name\": \"Prof. Leopold Ernser\",\n                \"email\": \"marta.becker@example.org\"\n            }\n        },\n        {\n            \"id\": 36,\n            \"subject\": \"The long grass rustled at her own courage. 'It's no.\",\n            \"content\": \"I hadn't begun my tea--not above a week or so--and what with the words a little, 'From the Queen. An invitation for the pool as it could go, and making quite a conversation of it appeared. 'I don't.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 10,\n                \"name\": \"Miss Harmony Pfannerstill\",\n                \"email\": \"tony.stracke@example.org\"\n            }\n        },\n        {\n            \"id\": 37,\n            \"subject\": \"Lizard's slate-pencil, and the March Hare interrupted.\",\n            \"content\": \"Alice went on, '--likely to win, that it's hardly worth while finishing the game.' The Queen smiled and passed on. 'Who ARE you doing out here? Run home this moment, I tell you!' But she waited for.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 10,\n                \"name\": \"Miss Harmony Pfannerstill\",\n                \"email\": \"tony.stracke@example.org\"\n            }\n        },\n        {\n            \"id\": 38,\n            \"subject\": \"Bill had left off writing on his spectacles. 'Where shall.\",\n            \"content\": \"March Hare. 'Sixteenth,' added the Dormouse. 'Write that down,' the King put on her face brightened up again.) 'Please your Majesty,' the Hatter replied. 'Of course twinkling begins with an M?' said.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 3,\n                \"name\": \"Nickolas Jenkins\",\n                \"email\": \"christelle.block@example.net\"\n            }\n        },\n        {\n            \"id\": 39,\n            \"subject\": \"I!' said the Mock Turtle. 'She can't explain it,' said.\",\n            \"content\": \"I'll eat it,' said the last concert!' on which the cook had disappeared. 'Never mind!' said the Duchess; 'I never went to school in the air, I'm afraid, but you might like to drop the jar for fear.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 15,\n                \"name\": \"Lilla Schmeler\",\n                \"email\": \"akoss@example.net\"\n            }\n        },\n        {\n            \"id\": 40,\n            \"subject\": \"Fish-Footman was gone, and the baby--the fire-irons came.\",\n            \"content\": \"So they couldn't see it?' So she began fancying the sort of circle, ('the exact shape doesn't matter,' it said,) and then I'll tell him--it was for bringing the cook was leaning over the verses the.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 41,\n            \"subject\": \"Seaography: then Drawling--the Drawling-master was an old.\",\n            \"content\": \"Oh, I shouldn't like THAT!' 'Oh, you foolish Alice!' she answered herself. 'How can you learn lessons in here? Why, there's hardly room for YOU, and no room to open her mouth; but she ran across the.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Prof. Adan Douglas DDS\",\n                \"email\": \"kitty.kris@example.com\"\n            }\n        },\n        {\n            \"id\": 42,\n            \"subject\": \"Alice. 'That's very important,' the King said to herself.\",\n            \"content\": \"I chose,' the Duchess was sitting on the twelfth?' Alice went on, 'and most things twinkled after that--only the March Hare. 'Sixteenth,' added the Dormouse, not choosing to notice this question.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 11,\n                \"name\": \"Micah Monahan\",\n                \"email\": \"ucronin@example.net\"\n            }\n        },\n        {\n            \"id\": 43,\n            \"subject\": \"Lory, with a knife, it usually bleeds; and she did not.\",\n            \"content\": \"And in she went. Once more she found it very nice, (it had, in fact, I didn't know that you're mad?' 'To begin with,' the Mock Turtle drew a long time together.' 'Which is just the case with my.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 14,\n                \"name\": \"Miss Kiara Kutch II\",\n                \"email\": \"hudson.marquise@example.com\"\n            }\n        },\n        {\n            \"id\": 44,\n            \"subject\": \"The Hatter was the matter with it. There was a large pool.\",\n            \"content\": \"I'm I, and--oh dear, how puzzling it all is! I'll try if I was, I shouldn't like THAT!' 'Oh, you foolish Alice!' she answered herself. 'How can you learn lessons in the air. This time Alice waited a.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 6,\n                \"name\": \"Mrs. Thalia Grimes\",\n                \"email\": \"jamir72@example.com\"\n            }\n        },\n        {\n            \"id\": 45,\n            \"subject\": \"As soon as look at them--'I wish they'd get the trial.\",\n            \"content\": \"Hatter went on, without attending to her, so she went back to the shore, and then dipped suddenly down, so suddenly that Alice could hardly hear the very middle of her own children. 'How should I.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 8,\n                \"name\": \"Gino Osinski\",\n                \"email\": \"harrison11@example.org\"\n            }\n        },\n        {\n            \"id\": 46,\n            \"subject\": \"Five! Don't go splashing paint over me like that!' By this.\",\n            \"content\": \"I will prosecute YOU.--Come, I'll take no denial; We must have a prize herself, you know,' said the King. On this the whole party at once in her lessons in the other: he came trotting along in a.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 7,\n                \"name\": \"Ms. Mazie Stehr\",\n                \"email\": \"evie67@example.net\"\n            }\n        },\n        {\n            \"id\": 47,\n            \"subject\": \"Dormouse! Turn that Dormouse out of a well?' The Dormouse.\",\n            \"content\": \"King. 'When did you manage to do with this creature when I learn music.' 'Ah! that accounts for it,' said Alice in a melancholy tone. 'Nobody seems to grin, How neatly spread his claws, And welcome.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 12,\n                \"name\": \"Frederik Brown\",\n                \"email\": \"kelly00@example.com\"\n            }\n        },\n        {\n            \"id\": 48,\n            \"subject\": \"Queen's ears--' the Rabbit say, 'A barrowful of WHAT?'.\",\n            \"content\": \"Alice, rather doubtfully, as she could guess, she was appealed to by the time he had taken his watch out of sight. Alice remained looking thoughtfully at the proposal. 'Then the words don't FIT.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 5,\n                \"name\": \"Ms. Gabrielle Adams DDS\",\n                \"email\": \"leffler.walton@example.com\"\n            }\n        },\n        {\n            \"id\": 49,\n            \"subject\": \"Alice. 'Anything you like,' said the March Hare. 'Exactly.\",\n            \"content\": \"YOUR temper!' 'Hold your tongue!' added the Queen. 'It proves nothing of the trial.' 'Stupid things!' Alice began to say anything. 'Why,' said the Mouse heard this, it turned a back-somersault in at.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 9,\n                \"name\": \"Carleton Leuschke\",\n                \"email\": \"sandrine.schaden@example.org\"\n            }\n        },\n        {\n            \"id\": 50,\n            \"subject\": \"Lizard) could not join the dance?\\\"' 'Thank you, it's a.\",\n            \"content\": \"Alice herself, and fanned herself with one eye; but to get out at all comfortable, and it sat for a minute, trying to fix on one, the cook till his eyes very wide on hearing this; but all he SAID.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 14,\n                \"name\": \"Miss Kiara Kutch II\",\n                \"email\": \"hudson.marquise@example.com\"\n            }\n        },\n        {\n            \"id\": 51,\n            \"subject\": \"Wonderland of long ago: and how she would have this cat.\",\n            \"content\": \"Alice hastily, afraid that it was very glad to get us dry would be wasting our breath.\\\" \\\"I'll be judge, I'll be jury,\\\" Said cunning old Fury: \\\"I'll try the thing Mock Turtle persisted. 'How COULD he.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 13,\n                \"name\": \"Prof. Leopold Ernser\",\n                \"email\": \"marta.becker@example.org\"\n            }\n        },\n        {\n            \"id\": 52,\n            \"subject\": \"Hatter: 'it's very easy to know your history, she do.'.\",\n            \"content\": \"Alice cautiously replied: 'but I haven't been invited yet.' 'You'll see me there,' said the last words out loud, and the whole pack of cards!' At this moment Five, who had followed him into the.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 3,\n                \"name\": \"Nickolas Jenkins\",\n                \"email\": \"christelle.block@example.net\"\n            }\n        },\n        {\n            \"id\": 53,\n            \"subject\": \"Soup? Beau--ootiful Soo--oop! Beau--ootiful Soo--oop!.\",\n            \"content\": \"However, she soon found out that she was now, and she went on, looking anxiously about her. 'Oh, do let me help to undo it!' 'I shall be punished for it flashed across her mind that she knew she had.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 12,\n                \"name\": \"Frederik Brown\",\n                \"email\": \"kelly00@example.com\"\n            }\n        },\n        {\n            \"id\": 54,\n            \"subject\": \"English coast you find a number of changes she had wept.\",\n            \"content\": \"King very decidedly, and he went on, 'you see, a dog growls when it's angry, and wags its tail when it's pleased. Now I growl when I'm angry. Therefore I'm mad.' 'I call it purring, not growling,'.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 7,\n                \"name\": \"Ms. Mazie Stehr\",\n                \"email\": \"evie67@example.net\"\n            }\n        },\n        {\n            \"id\": 55,\n            \"subject\": \"But her sister kissed her, and she could do to come once a.\",\n            \"content\": \"I can go back by railway,' she said to the garden with one eye; but to open her mouth; but she could for sneezing. There was a bright idea came into her face. 'Very,' said Alice: '--where's the.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Prof. Adan Douglas DDS\",\n                \"email\": \"kitty.kris@example.com\"\n            }\n        },\n        {\n            \"id\": 56,\n            \"subject\": \"I'll manage better this time,' she said, without opening.\",\n            \"content\": \"I'M a Duchess,' she said to itself 'The Duchess! The Duchess! Oh my fur and whiskers! She'll get me executed, as sure as ferrets are ferrets! Where CAN I have dropped them, I wonder?' As she said to.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 5,\n                \"name\": \"Ms. Gabrielle Adams DDS\",\n                \"email\": \"leffler.walton@example.com\"\n            }\n        },\n        {\n            \"id\": 57,\n            \"subject\": \"I like\\\"!' 'You might just as she could remember about.\",\n            \"content\": \"Alice was very deep, or she should push the matter with it. There was nothing on it in time,' said the Caterpillar sternly. 'Explain yourself!' 'I can't go no lower,' said the Cat, 'if you only walk.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 11,\n                \"name\": \"Micah Monahan\",\n                \"email\": \"ucronin@example.net\"\n            }\n        },\n        {\n            \"id\": 58,\n            \"subject\": \"I don't know the meaning of half an hour or so there were.\",\n            \"content\": \"I know THAT well enough; don't be nervous, or I'll kick you down stairs!' 'That is not said right,' said the Hatter. 'Stolen!' the King had said that day. 'No, no!' said the Caterpillar. Here was.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 4,\n                \"name\": \"Brendan Rice\",\n                \"email\": \"wbartoletti@example.com\"\n            }\n        },\n        {\n            \"id\": 59,\n            \"subject\": \"WHAT things?' said the Gryphon replied very solemnly.\",\n            \"content\": \"SHE, of course,' the Dodo said, 'EVERYBODY has won, and all her wonderful Adventures, till she heard a little hot tea upon its nose. The Dormouse shook its head impatiently, and walked a little way.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 5,\n                \"name\": \"Ms. Gabrielle Adams DDS\",\n                \"email\": \"leffler.walton@example.com\"\n            }\n        },\n        {\n            \"id\": 60,\n            \"subject\": \"Luckily for Alice, the little glass table. 'Now, I'll.\",\n            \"content\": \"I can go back and see how he can thoroughly enjoy The pepper when he finds out who I am! But I'd better take him his fan and two or three of the house opened, and a sad tale!' said the March Hare.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 2,\n                \"name\": \"Prof. Adan Douglas DDS\",\n                \"email\": \"kitty.kris@example.com\"\n            }\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://127.0.0.1:8000/api/tickets/open?page=1\",\n        \"last\": \"http://127.0.0.1:8000/api/tickets/open?page=3\",\n        \"prev\": null,\n        \"next\": \"http://127.0.0.1:8000/api/tickets/open?page=2\"\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 3,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/tickets/open?page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/tickets/open?page=2\",\n                \"label\": \"2\",\n                \"page\": 2,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/tickets/open?page=3\",\n                \"label\": \"3\",\n                \"page\": 3,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/tickets/open?page=2\",\n                \"label\": \"Next &raquo;\",\n                \"page\": 2,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://127.0.0.1:8000/api/tickets/open\",\n        \"per_page\": 50,\n        \"to\": 50,\n        \"total\": 104\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Closed Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/api/tickets/closed",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"tickets",
+						"closed"
+					]
+				},
+				"description": "# Get Closed Tickets\n\n## Overview\n\nThis endpoint retrieves a paginated list of all tickets that have been closed in the system. Each ticket includes complete details about the ticket itself and the associated user who created it.\n\n## Endpoint Details\n\n- **Method:** `GET`\n    \n- **Path:** `/api/tickets/closed`\n    \n- **Full URL:** `http://{{baseUrl}}/api/tickets/closed`\n    \n\n## Authentication\n\nThis endpoint requires authentication using a Bearer token. The token is provided via the `apiToken` variable.\n\n**Header:**\n\n```\nAuthorization: Bearer {{apiToken}}\n\n ```\n\n## Query Parameters\n\nThis endpoint supports standard pagination query parameters:\n\n- `page` - The page number to retrieve (optional, defaults to 1)\n    \n- `per_page` - Number of items per page (optional, defaults to 50)\n    \n\n## Response Structure\n\n### Success Response (200 OK)\n\nThe response contains three main sections:\n\n#### 1\\. Data Array\n\nAn array of closed ticket objects, each containing:\n\n- `id` (integer) - Unique ticket identifier\n    \n- `subject` (string) - Ticket subject line\n    \n- `content` (string) - Full ticket content/description\n    \n- `status` (string) - Current status (will be \"Closed\")\n    \n- `status_id` (integer) - Status identifier (2 for closed tickets)\n    \n- `created_at` (timestamp) - When the ticket was created\n    \n- `updated_at` (timestamp) - When the ticket was last updated\n    \n- `user` (object) - User who created the ticket\n    - `id` (integer) - User identifier\n        \n    - `name` (string) - User's full name\n        \n    - `email` (string) - User's email address\n        \n\n#### 2\\. Links Object\n\nPagination navigation links:\n\n- `first` - URL to the first page\n    \n- `last` - URL to the last page\n    \n- `prev` - URL to the previous page (null if on first page)\n    \n- `next` - URL to the next page (null if on last page)\n    \n\n#### 3\\. Meta Object\n\nPagination metadata:\n\n- `current_page` (integer) - Current page number\n    \n- `from` (integer) - Starting record number on current page\n    \n- `last_page` (integer) - Total number of pages\n    \n- `links` (array) - Array of page link objects with labels\n    \n- `path` (string) - Base path for pagination\n    \n- `per_page` (integer) - Number of records per page\n    \n- `to` (integer) - Ending record number on current page\n    \n- `total` (integer) - Total number of closed tickets\n    \n\n## Example Response\n\n``` json\n{\n  \"data\": [\n    {\n      \"id\": 10,\n      \"subject\": \"Sample ticket subject\",\n      \"content\": \"Detailed ticket content...\",\n      \"status\": \"Closed\",\n      \"status_id\": 2,\n      \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n      \"updated_at\": \"2025-12-04T13:25:20.000000Z\",\n      \"user\": {\n        \"id\": 15,\n        \"name\": \"John Doe\",\n        \"email\": \"john.doe@example.com\"\n      }\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/tickets/closed?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/tickets/closed?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"path\": \"http://127.0.0.1:8000/api/tickets/closed\",\n    \"per_page\": 50,\n    \"to\": 10,\n    \"total\": 10\n  }\n}\n\n ```\n\n## Use Cases\n\n- Retrieve all closed tickets for reporting purposes\n    \n- Display closed ticket history to users\n    \n- Export closed ticket data for analysis\n    \n- Monitor ticket resolution metrics"
+			},
+			"response": [
+				{
+					"name": "Closed Tickets",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{baseUrl}}/api/tickets/closed",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"tickets",
+								"closed"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.6"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 05 Dec 2025 10:39:27 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "30"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "29"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"id\": 10,\n            \"subject\": \"Mock Turtle in the back. However, it was getting very.\",\n            \"content\": \"Alice had got its head impatiently, and said, very gravely, 'I think, you ought to speak, and no room to grow up again! Let me see: that would happen: '\\\"Miss Alice! Come here directly, and get ready.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T13:25:20.000000Z\",\n            \"user\": {\n                \"id\": 15,\n                \"name\": \"Lilla Schmeler\",\n                \"email\": \"akoss@example.net\"\n            }\n        },\n        {\n            \"id\": 9,\n            \"subject\": \"CAN all that stuff,' the Mock Turtle said: 'no wise fish.\",\n            \"content\": \"There are no mice in the common way. So she began thinking over other children she knew that were of the Nile On every golden scale! 'How cheerfully he seems to grin, How neatly spread his claws.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T13:20:19.000000Z\",\n            \"user\": {\n                \"id\": 10,\n                \"name\": \"Miss Harmony Pfannerstill\",\n                \"email\": \"tony.stracke@example.org\"\n            }\n        },\n        {\n            \"id\": 8,\n            \"subject\": \"I can listen all day to day.' This was quite out of the.\",\n            \"content\": \"Alice as she could do to ask: perhaps I shall have to beat them off, and that he had never been so much about a thousand times as large as himself, and this was her dream:-- First, she dreamed of.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T13:15:20.000000Z\",\n            \"user\": {\n                \"id\": 6,\n                \"name\": \"Mrs. Thalia Grimes\",\n                \"email\": \"jamir72@example.com\"\n            }\n        },\n        {\n            \"id\": 7,\n            \"subject\": \"King said, turning to the Knave of Hearts, she made it out.\",\n            \"content\": \"She was looking down at her with large eyes full of tears, until there was no use going back to finish his story. CHAPTER IV. The Rabbit Sends in a very good advice, (though she very seldom followed.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T13:10:22.000000Z\",\n            \"user\": {\n                \"id\": 13,\n                \"name\": \"Prof. Leopold Ernser\",\n                \"email\": \"marta.becker@example.org\"\n            }\n        },\n        {\n            \"id\": 6,\n            \"subject\": \"Gryphon, and, taking Alice by the little golden key, and.\",\n            \"content\": \"Queen, but she felt that there was a dead silence. 'It's a pun!' the King was the cat.) 'I hope they'll remember her saucer of milk at tea-time. Dinah my dear! I wish I had our Dinah here, I know I.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T13:05:21.000000Z\",\n            \"user\": {\n                \"id\": 14,\n                \"name\": \"Miss Kiara Kutch II\",\n                \"email\": \"hudson.marquise@example.com\"\n            }\n        },\n        {\n            \"id\": 5,\n            \"subject\": \"NO mistake about it: it was looking at it uneasily.\",\n            \"content\": \"She was walking by the way, and nothing seems to be executed for having cheated herself in Wonderland, though she knew that were of the lefthand bit of stick, and made a memorandum of the Lobster.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T13:00:21.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 4,\n            \"subject\": \"Said his father; 'don't give yourself airs! Do you think I.\",\n            \"content\": \"Mock Turtle. Alice was very provoking to find that she did not sneeze, were the verses to himself: '\\\"WE KNOW IT TO BE TRUE--\\\" that's the queerest thing about it.' 'She's in prison,' the Queen.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T12:55:20.000000Z\",\n            \"user\": {\n                \"id\": 6,\n                \"name\": \"Mrs. Thalia Grimes\",\n                \"email\": \"jamir72@example.com\"\n            }\n        },\n        {\n            \"id\": 3,\n            \"subject\": \"I've got to the other side of WHAT?' thought Alice to.\",\n            \"content\": \"Alice, 'it's very interesting. I never heard before, 'Sure then I'm here! Digging for apples, indeed!' said the Gryphon. 'How the creatures wouldn't be so kind,' Alice replied, rather shyly, 'I--I.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T12:50:19.000000Z\",\n            \"user\": {\n                \"id\": 4,\n                \"name\": \"Brendan Rice\",\n                \"email\": \"wbartoletti@example.com\"\n            }\n        },\n        {\n            \"id\": 2,\n            \"subject\": \"So she was beginning to feel a little bit, and said to.\",\n            \"content\": \"March Hare meekly replied. 'Yes, but I don't want to see if there were three little sisters,' the Dormouse indignantly. However, he consented to go on. 'And so these three little sisters--they were.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T12:45:19.000000Z\",\n            \"user\": {\n                \"id\": 8,\n                \"name\": \"Gino Osinski\",\n                \"email\": \"harrison11@example.org\"\n            }\n        },\n        {\n            \"id\": 1,\n            \"subject\": \"Pennyworth only of beautiful Soup? Beau--ootiful Soo--oop!.\",\n            \"content\": \"There was certainly too much overcome to do it! Oh dear! I'd nearly forgotten that I've got to see how the game began. Alice thought to herself, as she went on for some time without interrupting it.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T12:40:20.000000Z\",\n            \"user\": {\n                \"id\": 15,\n                \"name\": \"Lilla Schmeler\",\n                \"email\": \"akoss@example.net\"\n            }\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://127.0.0.1:8000/api/tickets/closed?page=1\",\n        \"last\": \"http://127.0.0.1:8000/api/tickets/closed?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/tickets/closed?page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"page\": null,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://127.0.0.1:8000/api/tickets/closed\",\n        \"per_page\": 50,\n        \"to\": 10,\n        \"total\": 10\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "User Tickets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/api/users/1/tickets",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"1",
+						"tickets"
+					]
+				},
+				"description": "# Get User Tickets\n\nRetrieves all tickets associated with a specific user. This endpoint returns a paginated list of tickets for user ID 1, including full ticket details and associated user information.\n\n## Endpoint\n`GET /api/users/1/tickets`\n\n## Variables Used\n- `{{baseUrl}}` - The base URL for the API\n- `{{apiToken}}` - Authentication token for API access\n\n## Response Structure\n\nThe response returns a paginated collection with the following structure:\n\n### Ticket Object Fields\nEach ticket in the `data` array contains:\n\n- **id** (integer) - Unique identifier for the ticket\n- **subject** (string) - The ticket subject/title\n- **content** (string) - The full content/description of the ticket\n- **status** (string) - Human-readable status (e.g., \"Open\", \"Closed\")\n- **status_id** (integer) - Numeric status identifier\n- **created_at** (timestamp) - When the ticket was created (ISO 8601 format)\n- **updated_at** (timestamp) - When the ticket was last updated (ISO 8601 format)\n- **user** (object) - Nested user object containing:\n  - **id** (integer) - User's unique identifier\n  - **name** (string) - User's full name\n  - **email** (string) - User's email address\n\n### Pagination Structure\n\n#### Links Object\n- **first** - URL to the first page\n- **last** - URL to the last page\n- **prev** - URL to the previous page (null if on first page)\n- **next** - URL to the next page (null if on last page)\n\n#### Meta Object\n- **current_page** (integer) - Current page number\n- **from** (integer) - Starting record number on current page\n- **last_page** (integer) - Total number of pages\n- **links** (array) - Array of page link objects with url, label, page, and active status\n- **path** (string) - Base path for pagination\n- **per_page** (integer) - Number of records per page (default: 50)\n- **to** (integer) - Ending record number on current page\n- **total** (integer) - Total number of records across all pages\n\n## Example Response\n\n```json\n{\n  \"data\": [\n    {\n      \"id\": 114,\n      \"subject\": \"Ticket subject here\",\n      \"content\": \"Ticket content description\",\n      \"status\": \"Open\",\n      \"status_id\": 1,\n      \"created_at\": \"2025-12-04T13:25:12.000000Z\",\n      \"updated_at\": \"2025-12-04T13:25:12.000000Z\",\n      \"user\": {\n        \"id\": 1,\n        \"name\": \"Dr. Leon Jakubowski Sr.\",\n        \"email\": \"alycia.herman@example.net\"\n      }\n    }\n  ],\n  \"links\": {\n    \"first\": \"http://127.0.0.1:8000/api/users/1/tickets?page=1\",\n    \"last\": \"http://127.0.0.1:8000/api/users/1/tickets?page=1\",\n    \"prev\": null,\n    \"next\": null\n  },\n  \"meta\": {\n    \"current_page\": 1,\n    \"from\": 1,\n    \"last_page\": 1,\n    \"per_page\": 50,\n    \"to\": 12,\n    \"total\": 12\n  }\n}\n```\n\n## Status Code\n- **200 OK** - Successfully retrieved user tickets"
+			},
+			"response": [
+				{
+					"name": "User Tickets",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{baseUrl}}/api/users/1/tickets",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1",
+								"tickets"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.6"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 05 Dec 2025 10:39:41 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "30"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "28"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": [\n        {\n            \"id\": 114,\n            \"subject\": \"Queen shrieked out. 'Behead that Dormouse! Turn that.\",\n            \"content\": \"Alice waited a little, half expecting to see you again, you dear old thing!' said the Gryphon. 'Do you play croquet?' The soldiers were silent, and looked at Two. Two began in a very humble tone.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T13:25:12.000000Z\",\n            \"updated_at\": \"2025-12-04T13:25:12.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 109,\n            \"subject\": \"Alice took up the chimney, has he?' said Alice to herself.\",\n            \"content\": \"Though they were lying round the refreshments!' But there seemed to follow, except a little bird as soon as she went on growing, and, as the question was evidently meant for her. 'Yes!' shouted.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T13:20:11.000000Z\",\n            \"updated_at\": \"2025-12-04T13:20:11.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 104,\n            \"subject\": \"Rabbit's--'Pat! Pat! Where are you?' said Alice, (she had.\",\n            \"content\": \"Dodo had paused as if she was now only ten inches high, and was suppressed. 'Come, that finished the goose, with the Mouse to tell him. 'A nice muddle their slates'll be in before the end of the.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T13:15:12.000000Z\",\n            \"updated_at\": \"2025-12-04T13:15:12.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 93,\n            \"subject\": \"WAS a narrow escape!' said Alice, 'how am I to get hold of.\",\n            \"content\": \"THE KING AND QUEEN OF HEARTS. Alice was just saying to herself 'Suppose it should be raving mad--at least not so mad as it went, as if she meant to take out of its voice. 'Back to land again, and.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T13:04:14.000000Z\",\n            \"updated_at\": \"2025-12-04T13:04:14.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 84,\n            \"subject\": \"I am! But I'd better take him his fan and gloves--that is.\",\n            \"content\": \"And here poor Alice began in a very small cake, on which the March Hare, who had not attended to this last remark, 'it's a vegetable. It doesn't look like one, but it is.' 'I quite forgot how to.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:55:14.000000Z\",\n            \"updated_at\": \"2025-12-04T12:55:14.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 83,\n            \"subject\": \"Mouse, sharply and very soon finished it off. * * * * * *.\",\n            \"content\": \"Alice, very earnestly. 'I've had nothing else to say when I got up this morning? I almost think I should think!' (Dinah was the first to speak. 'What size do you like to try the patience of an.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:54:14.000000Z\",\n            \"updated_at\": \"2025-12-04T12:54:14.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 75,\n            \"subject\": \"Gryphon. 'Of course,' the Mock Turtle's heavy sobs.\",\n            \"content\": \"Rabbit just under the window, she suddenly spread out her hand, and Alice joined the procession, wondering very much of it appeared. 'I don't know of any use, now,' thought Alice, 'they're sure to.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:46:12.000000Z\",\n            \"updated_at\": \"2025-12-04T12:46:12.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 40,\n            \"subject\": \"Fish-Footman was gone, and the baby--the fire-irons came.\",\n            \"content\": \"So they couldn't see it?' So she began fancying the sort of circle, ('the exact shape doesn't matter,' it said,) and then I'll tell him--it was for bringing the cook was leaning over the verses the.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 61,\n            \"subject\": \"Queen, and Alice was just in time to hear his history. I.\",\n            \"content\": \"AT ALL. Soup does very well without--Maybe it's always pepper that had slipped in like herself. 'Would it be murder to leave off this minute!' She generally gave herself very good height indeed!'.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:22.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 23,\n            \"subject\": \"I learn music.' 'Ah! that accounts for it,' said the.\",\n            \"content\": \"So she began nibbling at the top of his Normans--\\\" How are you thinking of?' 'I beg your pardon,' said Alice aloud, addressing nobody in particular. 'She'd soon fetch it back!' 'And who is Dinah, if.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 29,\n            \"subject\": \"Alice, swallowing down her flamingo, and began to say but.\",\n            \"content\": \"CAN all that stuff,' the Mock Turtle angrily: 'really you are painting those roses?' Five and Seven said nothing, but looked at them with large eyes full of soup. 'There's certainly too much of a.\",\n            \"status\": \"Open\",\n            \"status_id\": 1,\n            \"created_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"updated_at\": \"2025-12-04T12:29:21.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        },\n        {\n            \"id\": 5,\n            \"subject\": \"NO mistake about it: it was looking at it uneasily.\",\n            \"content\": \"She was walking by the way, and nothing seems to be executed for having cheated herself in Wonderland, though she knew that were of the lefthand bit of stick, and made a memorandum of the Lobster.\",\n            \"status\": \"Closed\",\n            \"status_id\": 2,\n            \"created_at\": \"2025-12-04T11:30:16.000000Z\",\n            \"updated_at\": \"2025-12-04T13:00:21.000000Z\",\n            \"user\": {\n                \"id\": 1,\n                \"name\": \"Dr. Leon Jakubowski Sr.\",\n                \"email\": \"alycia.herman@example.net\"\n            }\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://127.0.0.1:8000/api/users/1/tickets?page=1\",\n        \"last\": \"http://127.0.0.1:8000/api/users/1/tickets?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"page\": null,\n                \"active\": false\n            },\n            {\n                \"url\": \"http://127.0.0.1:8000/api/users/1/tickets?page=1\",\n                \"label\": \"1\",\n                \"page\": 1,\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"page\": null,\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://127.0.0.1:8000/api/users/1/tickets\",\n        \"per_page\": 50,\n        \"to\": 12,\n        \"total\": 12\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Stats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/api/stats",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"stats"
+					]
+				},
+				"description": "# Get Ticket Statistics\n\n## Overview\nThis endpoint retrieves comprehensive statistics about tickets in the system. It provides an overview of ticket counts, processing status, top contributors, and recent activity.\n\n## Authentication\nThis endpoint requires authentication using an API token. The token should be provided via the `apiToken` variable.\n\n## Response Fields\n\n### `total_tickets` (integer)\nThe total number of tickets in the system across all statuses and users.\n\n### `total_unprocessed_tickets` (integer)\nThe count of tickets that have not yet been processed. This helps track the backlog of pending tickets.\n\n### `top_user` (object)\nDetails about the user who has created or been assigned the most tickets in the system:\n- **`id`** (integer): The unique identifier of the user\n- **`name`** (string): The full name of the user\n- **`email`** (string): The email address of the user\n- **`tickets_count`** (integer): The number of tickets associated with this user\n\n### `most_recent_processed_at` (string)\nTimestamp indicating when the most recent ticket was processed. Format: `YYYY-MM-DD HH:MM:SS`\n\n## Usage Notes\n- This endpoint is useful for dashboard displays and monitoring ticket system health\n- The statistics provide a quick snapshot of system activity and workload\n- Use this data to identify high-volume users and track processing efficiency"
+			},
+			"response": [
+				{
+					"name": "Stats",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{baseUrl}}/api/stats",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"stats"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "",
+					"header": [
+						{
+							"key": "Host",
+							"value": "127.0.0.1:8000"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.6"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 05 Dec 2025 10:39:49 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "30"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "27"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"total_tickets\": 114,\n    \"total_unprocessed_tickets\": 104,\n    \"top_user\": {\n        \"id\": 1,\n        \"name\": \"Dr. Leon Jakubowski Sr.\",\n        \"email\": \"alycia.herman@example.net\",\n        \"tickets_count\": 12\n    },\n    \"most_recent_processed_at\": \"2025-12-04 13:25:20\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{apiToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

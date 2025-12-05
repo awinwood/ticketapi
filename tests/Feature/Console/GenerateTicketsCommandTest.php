@@ -19,3 +19,15 @@ it('generates tickets via the console command', function () {
         expect($ticket->status)->toBe(TicketStatus::OPEN);
     });
 });
+
+it('rejects invalid ticket counts', function () {
+    expect(\App\Models\Ticket::count())->toBe(0);
+
+    $this->artisan('tickets:generate', [
+        '--count' => 0,
+    ])
+        ->expectsOutput('Invalid ticket count')
+        ->assertExitCode(\Illuminate\Console\Command::INVALID);
+
+    expect(\App\Models\Ticket::count())->toBe(0);
+});

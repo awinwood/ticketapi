@@ -166,6 +166,32 @@ Returns:
 }
 ```
 
+## 🧩 Architecture Overview
+
+```mermaid
+flowchart TD
+    Client[API Client\n(Postman, Frontend)] -->|Bearer token| Sanctum[Laravel Sanctum]
+
+    subgraph HTTP[HTTP Layer]
+        Sanctum -->|auth:sanctum| Middleware[Middleware\nthrottle:tickets-api + audit.api]
+        Middleware --> Controllers[API Controllers\nTicketController, StatsController]
+    end
+
+    subgraph Core[Application Core]
+        Controllers --> Services[Services\nTicketGeneratorService\nTicketProcessorService]
+        Services --> Models[Models\nTicket, User]
+        Models --> DB[(SQLite Database)]
+    end
+
+    subgraph Console[Background Processing]
+        Scheduler[Scheduler\nphp artisan schedule:work] --> Commands[Artisan Commands\n tickets:generate\n tickets:process]
+        Commands --> Services
+    end
+
+    Middleware --> AuditLog[(api_audits)]
+```
+
+
 ## 🧵 Rate Limiting
 All API endpoints are rate limited to 30 requests per minute per user/IP.
 

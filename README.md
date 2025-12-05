@@ -170,7 +170,6 @@ Returns:
 
 ```mermaid
 flowchart TD
-    flowchart TD
     Client[API Client (Postman, Frontend)]
     Sanctum[Laravel Sanctum]
     Middleware[Middleware: throttle + audit]

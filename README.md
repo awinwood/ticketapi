@@ -170,25 +170,30 @@ Returns:
 
 ```mermaid
 flowchart TD
-    Client[API Client\n(Postman, Frontend)] -->|Bearer token| Sanctum[Laravel Sanctum]
+    flowchart TD
+    Client[API Client (Postman, Frontend)]
+    Sanctum[Laravel Sanctum]
+    Middleware[Middleware: throttle + audit]
+    Controllers[API Controllers]
+    Services[Services]
+    Models[Models]
+    DB[(SQLite Database)]
+    Scheduler[Scheduler (cron)]
+    Commands[Artisan Commands]
+    AuditLog[(api_audits)]
 
-    subgraph HTTP[HTTP Layer]
-        Sanctum -->|auth:sanctum| Middleware[Middleware\nthrottle:tickets-api + audit.api]
-        Middleware --> Controllers[API Controllers\nTicketController, StatsController]
-    end
+    Client -->|Bearer token| Sanctum
+    Sanctum --> Middleware
+    Middleware --> Controllers
 
-    subgraph Core[Application Core]
-        Controllers --> Services[Services\nTicketGeneratorService\nTicketProcessorService]
-        Services --> Models[Models\nTicket, User]
-        Models --> DB[(SQLite Database)]
-    end
+    Controllers --> Services
+    Services --> Models
+    Models --> DB
 
-    subgraph Console[Background Processing]
-        Scheduler[Scheduler\nphp artisan schedule:work] --> Commands[Artisan Commands\n tickets:generate\n tickets:process]
-        Commands --> Services
-    end
+    Scheduler --> Commands
+    Commands --> Services
 
-    Middleware --> AuditLog[(api_audits)]
+    Middleware --> AuditLog
 ```
 
 

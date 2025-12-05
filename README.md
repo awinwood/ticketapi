@@ -170,16 +170,16 @@ Returns:
 
 ```mermaid
 flowchart TD
-    Client[API Client (Postman, Frontend)]
+    Client[API Client - Postman, Frontend]
     Sanctum[Laravel Sanctum]
     Middleware[Middleware: throttle + audit]
     Controllers[API Controllers]
     Services[Services]
     Models[Models]
-    DB[(SQLite Database)]
-    Scheduler[Scheduler (cron)]
+    DB[SQLite Database]
+    Scheduler[Scheduler - cron]
     Commands[Artisan Commands]
-    AuditLog[(api_audits)]
+    AuditLog[api_audits]
 
     Client -->|Bearer token| Sanctum
     Sanctum --> Middleware

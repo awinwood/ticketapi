@@ -176,10 +176,10 @@ flowchart TD
     Controllers[API Controllers]
     Services[Services]
     Models[Models]
-    DB[SQLite Database]
+    DB[(SQLite Database)]
     Scheduler[Scheduler - cron]
     Commands[Artisan Commands]
-    AuditLog[api_audits]
+    AuditLog[Audit Log]
 
     Client -->|Bearer token| Sanctum
     Sanctum --> Middleware
@@ -193,6 +193,7 @@ flowchart TD
     Commands --> Services
 
     Middleware --> AuditLog
+    AuditLog --> DB
 ```
 
 
